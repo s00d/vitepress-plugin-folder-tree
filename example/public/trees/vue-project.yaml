@@ -1,0 +1,63 @@
+- name: vue-app
+  description: "Vue 3 starter"
+  note: "v1.0.0"
+  children:
+    - name: src
+      children:
+        - name: components
+          children:
+            - name: ui
+              children:
+                - Button.vue
+                - Modal.vue
+                - Input.vue
+                - Dropdown.vue
+            - name: layout
+              children:
+                - Header.vue
+                - Footer.vue
+                - Sidebar.vue
+            - AppLogo.vue
+        - name: composables
+          children:
+            - useAuth.ts
+            - useFetch.ts
+            - useTheme.ts
+        - name: pages
+          children:
+            - index.vue
+            - about.vue
+            - name: blog
+              children:
+                - index.vue
+                - "[slug].vue"
+        - name: stores
+          children:
+            - auth.ts
+            - app.ts
+        - App.vue
+        - main.ts
+        - router.ts
+    - name: public
+      children:
+        - favicon.ico
+        - robots.txt
+    - name: tests
+      open: false
+      note: "92% coverage"
+      children:
+        - name: unit
+          children:
+            - Button.test.ts
+            - useAuth.test.ts
+        - name: e2e
+          children:
+            - login.spec.ts
+            - navigation.spec.ts
+    - .gitignore
+    - .env.example
+    - package.json
+    - tsconfig.json
+    - vite.config.ts
+    - name: README.md
+      icon: "📖"

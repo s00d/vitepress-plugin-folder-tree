@@ -1,0 +1,12 @@
+{
+  "framework": "Vue 3",
+  "version": "3.5.0",
+  "components": ["Button.vue", "Modal.vue", "Input.vue"],
+  "composables": ["useAuth.ts", "useFetch.ts", "useTheme.ts"],
+  "pages": ["index.vue", "about.vue"],
+  "tests": {
+    "unit": ["Button.test.ts", "useAuth.test.ts"],
+    "e2e": ["login.spec.ts", "navigation.spec.ts"],
+    "coverage": "92%"
+  }
+}
