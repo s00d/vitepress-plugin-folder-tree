@@ -1,7 +1,7 @@
 {
   "name": "vitepress-plugin-folder-tree",
-  "version": "1.0.0",
-  "description": "Folder tree plugin for VitePress - render beautiful file tree diagrams from markdown code blocks",
+  "version": "1.0.1",
+  "description": "Interactive, collapsible file/folder tree diagrams for VitePress — supports YAML, ASCII, external URLs, filesystem scan, tabs, search, git status badges, deep linking, and more",
   "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/vitepress-plugin-folder-tree.umd.js",
@@ -41,12 +41,23 @@
   },
   "keywords": [
     "vitepress",
+    "vitepress-plugin",
     "folder-tree",
     "file-tree",
     "tree",
-    "markdown",
+    "directory-tree",
     "directory-structure",
-    "vue"
+    "markdown",
+    "markdown-it",
+    "vue",
+    "vue3",
+    "collapsible",
+    "interactive",
+    "ascii-tree",
+    "yaml",
+    "code-block",
+    "docs",
+    "documentation"
   ],
   "author": "s00d",
   "license": "MIT",
@@ -57,5 +68,16 @@
   "homepage": "https://github.com/s00d/vitepress-plugin-folder-tree",
   "bugs": {
     "url": "https://github.com/s00d/vitepress-plugin-folder-tree/issues"
-  }
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://www.donationalerts.com/r/s00d88"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": [
+    "**/*.css",
+    "**/*.vue"
+  ]
 }

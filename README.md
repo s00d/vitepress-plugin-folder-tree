@@ -1,11 +1,11 @@
-# vitepress-plugin-folder-tree
-
-Interactive file/folder tree diagrams for [VitePress](https://vitepress.dev). Write YAML or paste ASCII — get a beautiful, collapsible Vue component.
-
 [![npm version](https://img.shields.io/npm/v/vitepress-plugin-folder-tree/latest?style=for-the-badge)](https://www.npmjs.com/package/vitepress-plugin-folder-tree)
 [![npm downloads](https://img.shields.io/npm/dw/vitepress-plugin-folder-tree?style=for-the-badge)](https://www.npmjs.com/package/vitepress-plugin-folder-tree)
 [![License](https://img.shields.io/npm/l/vitepress-plugin-folder-tree?style=for-the-badge)](https://github.com/s00d/vitepress-plugin-folder-tree/blob/main/LICENSE)
 [![Donate](https://img.shields.io/badge/Donate-Donationalerts-ff4081?style=for-the-badge)](https://www.donationalerts.com/r/s00d88)
+
+# vitepress-plugin-folder-tree
+
+Interactive file/folder tree diagrams for [VitePress](https://vitepress.dev). Write YAML or paste ASCII — get a beautiful, collapsible Vue component.
 
 ---
 
