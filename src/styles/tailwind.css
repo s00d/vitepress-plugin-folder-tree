@@ -358,6 +358,18 @@
 .vft-ficon-neutral-body { @apply vft:fill-neutral-200 vft:stroke-neutral-400; }
 .vft-ficon-neutral-fold { @apply vft:stroke-neutral-400; }
 .vft-ficon-neutral-label{ @apply vft:fill-neutral-500; }
+.vft-ficon-teal-body    { @apply vft:fill-teal-200 vft:stroke-teal-500; }
+.vft-ficon-teal-fold    { @apply vft:stroke-teal-500; }
+.vft-ficon-teal-label   { @apply vft:fill-teal-800; }
+.vft-ficon-lime-body    { @apply vft:fill-lime-200 vft:stroke-lime-500; }
+.vft-ficon-lime-fold    { @apply vft:stroke-lime-500; }
+.vft-ficon-lime-label   { @apply vft:fill-lime-800; }
+.vft-ficon-fuchsia-body { @apply vft:fill-fuchsia-200 vft:stroke-fuchsia-500; }
+.vft-ficon-fuchsia-fold { @apply vft:stroke-fuchsia-500; }
+.vft-ficon-fuchsia-label{ @apply vft:fill-fuchsia-800; }
+.vft-ficon-yellow-body  { @apply vft:fill-yellow-200 vft:stroke-yellow-500; }
+.vft-ficon-yellow-fold  { @apply vft:stroke-yellow-500; }
+.vft-ficon-yellow-label { @apply vft:fill-yellow-800; }
 
 /* ─── Reduced motion ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {

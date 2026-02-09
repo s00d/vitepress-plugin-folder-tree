@@ -1463,3 +1463,528 @@ Click on any tree or press `Tab` to focus it, then use:
 |---|---|
 | `Ctrl + Click` (Win/Linux) | Open context menu on clicked node |
 | `Cmd + Click` (Mac) | Open context menu on clicked node |
+
+## File Icon Colors (all extensions)
+
+Visual test of all supported file extensions grouped by color:
+
+<details>
+<summary>Show code</summary>
+
+````yaml
+```tree
+- name: "all-extensions"
+  children:
+    - name: "JavaScript (amber)"
+      children:
+        - app.js
+        - module.mjs
+        - legacy.cjs
+        - component.jsx
+        - .env
+        - .npmrc
+        - .nvmrc
+        - main.nim
+        - template.ejs
+    - name: "TypeScript (blue)"
+      children:
+        - app.ts
+        - module.mts
+        - legacy.cts
+        - component.tsx
+        - types.d_ts
+    - name: "Vue / Nunjucks (emerald)"
+      children:
+        - App.vue
+        - layout.njk
+        - config.vim
+    - name: "HTML / Svelte / Rust (orange)"
+      children:
+        - index.html
+        - page.htm
+        - logo.svg
+        - App.svelte
+        - main.rs
+        - lib.zig
+        - template.hbs
+        - page.pug
+    - name: "Java / Gradle (red)"
+      children:
+        - Main.java
+        - app.jar
+        - build.gradle
+    - name: "Git (orange)"
+      children:
+        - .git
+        - .gitignore
+        - .gitattributes
+        - .gitmodules
+    - name: "JSON / Data (teal)"
+      children:
+        - data.json
+        - config.json5
+        - settings.jsonc
+        - stream.jsonl
+        - events.ndjson
+    - name: "YAML / TOML (lime)"
+      children:
+        - config.yaml
+        - ci.yml
+        - settings.toml
+    - name: "XML / CSV (orange / green)"
+      children:
+        - feed.xml
+        - data.csv
+        - data.tsv
+    - name: "Config (gray)"
+      children:
+        - settings.ini
+        - app.cfg
+        - server.conf
+        - db.properties
+        - package-lock.lock
+        - bun.lockb
+        - LICENSE.lic
+        - LICENSE.license
+        - .editorconfig
+        - .prettierrc
+        - .eslintrc
+        - .babelrc
+        - .browserslistrc
+        - schema.proto
+        - service.thrift
+    - name: "Fonts (gray)"
+      children:
+        - font.woff
+        - font.woff2
+        - font.ttf
+        - font.otf
+        - font.eot
+    - name: "Markdown / Docs (sky)"
+      children:
+        - README.md
+        - docs.mdx
+        - guide.rst
+        - manual.adoc
+        - paper.tex
+        - thesis.latex
+    - name: "Docker (sky)"
+      children:
+        - Dockerfile.dockerfile
+        - .dockerignore
+    - name: "Dart (sky)"
+      children:
+        - main.dart
+    - name: "CSS (indigo)"
+      children:
+        - style.css
+        - theme.less
+        - base.styl
+        - main.stylus
+    - name: "SCSS / Sass (pink)"
+      children:
+        - theme.scss
+        - base.sass
+    - name: "GraphQL (fuchsia)"
+      children:
+        - schema.graphql
+        - query.gql
+    - name: "Python (cyan)"
+      children:
+        - app.py
+        - types.pyi
+        - fast.pyx
+        - gui.pyw
+        - notebook.ipynb
+    - name: "Go (cyan)"
+      children:
+        - main.go
+        - go.mod
+        - go.sum
+    - name: "SQL / DB (cyan)"
+      children:
+        - query.sql
+        - data.sqlite
+        - app.db
+        - schema.prisma
+    - name: "Ruby / Perl (red)"
+      children:
+        - app.rb
+        - tasks.rake
+        - gem.gemspec
+        - layout.erb
+        - script.pl
+        - module.pm
+        - app.perl
+    - name: "Kotlin / C# / F# / Scala / Elixir (violet)"
+      children:
+        - Main.kt
+        - build.kts
+        - Program.cs
+        - script.csx
+        - App.fs
+        - script.fsx
+        - repl.fsi
+        - Main.scala
+        - build.sbt
+        - app.ex
+        - test.exs
+        - init.el
+    - name: "Terraform / HCL (violet)"
+      children:
+        - main.tf
+        - config.hcl
+    - name: "Swift / Objective-C (rose)"
+      children:
+        - App.swift
+        - ViewController.m
+        - Bridge.mm
+    - name: "PHP (slate)"
+      children:
+        - index.php
+        - view.phtml
+        - layout.blade
+        - template.twig
+    - name: "C / C++ (slate)"
+      children:
+        - main.c
+        - app.cpp
+        - module.cc
+        - lib.cxx
+        - main.h
+        - app.hpp
+        - lib.hxx
+    - name: "R (blue)"
+      children:
+        - analysis.r
+        - report.rmd
+    - name: "Lua / V (blue)"
+      children:
+        - init.lua
+        - main.v
+    - name: "Shell / Make (stone)"
+      children:
+        - install.sh
+        - setup.bash
+        - config.zsh
+        - init.fish
+        - script.ps1
+        - module.psm1
+        - run.bat
+        - build.cmd
+        - Makefile.make
+        - Makefile.makefile
+    - name: "Images (green)"
+      children:
+        - photo.png
+        - photo.jpg
+        - photo.jpeg
+        - anim.gif
+        - image.webp
+        - image.avif
+        - favicon.ico
+        - image.bmp
+        - scan.tiff
+        - scan.tif
+    - name: "Video / Audio (rose)"
+      children:
+        - video.mp4
+        - clip.webm
+        - movie.mov
+        - clip.avi
+        - song.mp3
+        - audio.wav
+        - track.ogg
+        - music.flac
+    - name: "Archives (stone)"
+      children:
+        - archive.zip
+        - backup.tar
+        - data.gz
+        - data.bz2
+        - data.xz
+        - archive.rar
+        - archive.7z
+    - name: "Documents (branded)"
+      children:
+        - report.pdf
+        - letter.doc
+        - letter.docx
+        - budget.xls
+        - budget.xlsx
+        - slides.ppt
+        - slides.pptx
+    - name: "Binaries (neutral)"
+      children:
+        - module.wasm
+        - data.bin
+        - app.exe
+        - lib.dll
+        - lib.so
+    - name: "Plain text (neutral)"
+      children:
+        - notes.txt
+        - output.log
+        - changes.diff
+        - fix.patch
+```
+````
+
+</details>
+
+```tree
+- name: "all-extensions"
+  children:
+    - name: "JavaScript (amber)"
+      children:
+        - app.js
+        - module.mjs
+        - legacy.cjs
+        - component.jsx
+        - .env
+        - .npmrc
+        - .nvmrc
+        - main.nim
+        - template.ejs
+    - name: "TypeScript (blue)"
+      children:
+        - app.ts
+        - module.mts
+        - legacy.cts
+        - component.tsx
+        - types.d_ts
+    - name: "Vue / Nunjucks (emerald)"
+      children:
+        - App.vue
+        - layout.njk
+        - config.vim
+    - name: "HTML / Svelte / Rust (orange)"
+      children:
+        - index.html
+        - page.htm
+        - logo.svg
+        - App.svelte
+        - main.rs
+        - lib.zig
+        - template.hbs
+        - page.pug
+    - name: "Java / Gradle (red)"
+      children:
+        - Main.java
+        - app.jar
+        - build.gradle
+    - name: "Git (orange)"
+      children:
+        - .git
+        - .gitignore
+        - .gitattributes
+        - .gitmodules
+    - name: "JSON / Data (teal)"
+      children:
+        - data.json
+        - config.json5
+        - settings.jsonc
+        - stream.jsonl
+        - events.ndjson
+    - name: "YAML / TOML (lime)"
+      children:
+        - config.yaml
+        - ci.yml
+        - settings.toml
+    - name: "XML / CSV (orange / green)"
+      children:
+        - feed.xml
+        - data.csv
+        - data.tsv
+    - name: "Config (gray)"
+      children:
+        - settings.ini
+        - app.cfg
+        - server.conf
+        - db.properties
+        - package-lock.lock
+        - bun.lockb
+        - LICENSE.lic
+        - LICENSE.license
+        - .editorconfig
+        - .prettierrc
+        - .eslintrc
+        - .babelrc
+        - .browserslistrc
+        - schema.proto
+        - service.thrift
+    - name: "Fonts (gray)"
+      children:
+        - font.woff
+        - font.woff2
+        - font.ttf
+        - font.otf
+        - font.eot
+    - name: "Markdown / Docs (sky)"
+      children:
+        - README.md
+        - docs.mdx
+        - guide.rst
+        - manual.adoc
+        - paper.tex
+        - thesis.latex
+    - name: "Docker (sky)"
+      children:
+        - Dockerfile.dockerfile
+        - .dockerignore
+    - name: "Dart (sky)"
+      children:
+        - main.dart
+    - name: "CSS (indigo)"
+      children:
+        - style.css
+        - theme.less
+        - base.styl
+        - main.stylus
+    - name: "SCSS / Sass (pink)"
+      children:
+        - theme.scss
+        - base.sass
+    - name: "GraphQL (fuchsia)"
+      children:
+        - schema.graphql
+        - query.gql
+    - name: "Python (cyan)"
+      children:
+        - app.py
+        - types.pyi
+        - fast.pyx
+        - gui.pyw
+        - notebook.ipynb
+    - name: "Go (cyan)"
+      children:
+        - main.go
+        - go.mod
+        - go.sum
+    - name: "SQL / DB (cyan)"
+      children:
+        - query.sql
+        - data.sqlite
+        - app.db
+        - schema.prisma
+    - name: "Ruby / Perl (red)"
+      children:
+        - app.rb
+        - tasks.rake
+        - gem.gemspec
+        - layout.erb
+        - script.pl
+        - module.pm
+        - app.perl
+    - name: "Kotlin / C# / F# / Scala / Elixir (violet)"
+      children:
+        - Main.kt
+        - build.kts
+        - Program.cs
+        - script.csx
+        - App.fs
+        - script.fsx
+        - repl.fsi
+        - Main.scala
+        - build.sbt
+        - app.ex
+        - test.exs
+        - init.el
+    - name: "Terraform / HCL (violet)"
+      children:
+        - main.tf
+        - config.hcl
+    - name: "Swift / Objective-C (rose)"
+      children:
+        - App.swift
+        - ViewController.m
+        - Bridge.mm
+    - name: "PHP (slate)"
+      children:
+        - index.php
+        - view.phtml
+        - layout.blade
+        - template.twig
+    - name: "C / C++ (slate)"
+      children:
+        - main.c
+        - app.cpp
+        - module.cc
+        - lib.cxx
+        - main.h
+        - app.hpp
+        - lib.hxx
+    - name: "R (blue)"
+      children:
+        - analysis.r
+        - report.rmd
+    - name: "Lua / V (blue)"
+      children:
+        - init.lua
+        - main.v
+    - name: "Shell / Make (stone)"
+      children:
+        - install.sh
+        - setup.bash
+        - config.zsh
+        - init.fish
+        - script.ps1
+        - module.psm1
+        - run.bat
+        - build.cmd
+        - Makefile.make
+        - Makefile.makefile
+    - name: "Images (green)"
+      children:
+        - photo.png
+        - photo.jpg
+        - photo.jpeg
+        - anim.gif
+        - image.webp
+        - image.avif
+        - favicon.ico
+        - image.bmp
+        - scan.tiff
+        - scan.tif
+    - name: "Video / Audio (rose)"
+      children:
+        - video.mp4
+        - clip.webm
+        - movie.mov
+        - clip.avi
+        - song.mp3
+        - audio.wav
+        - track.ogg
+        - music.flac
+    - name: "Archives (stone)"
+      children:
+        - archive.zip
+        - backup.tar
+        - data.gz
+        - data.bz2
+        - data.xz
+        - archive.rar
+        - archive.7z
+    - name: "Documents (branded)"
+      children:
+        - report.pdf
+        - letter.doc
+        - letter.docx
+        - budget.xls
+        - budget.xlsx
+        - slides.ppt
+        - slides.pptx
+    - name: "Binaries (neutral)"
+      children:
+        - module.wasm
+        - data.bin
+        - app.exe
+        - lib.dll
+        - lib.so
+    - name: "Plain text (neutral)"
+      children:
+        - notes.txt
+        - output.log
+        - changes.diff
+        - fix.patch
+```

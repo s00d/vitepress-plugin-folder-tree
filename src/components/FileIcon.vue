@@ -34,7 +34,8 @@ const props = defineProps<{ ext: string }>();
 type ColorGroup =
   | 'amber' | 'blue' | 'emerald' | 'orange' | 'gray' | 'sky'
   | 'indigo' | 'pink' | 'cyan' | 'red' | 'violet' | 'rose'
-  | 'slate' | 'stone' | 'green' | 'neutral';
+  | 'slate' | 'stone' | 'green' | 'neutral'
+  | 'teal' | 'lime' | 'fuchsia' | 'yellow';
 
 const EXT_COLOR_MAP: Record<string, ColorGroup> = {
   // ── JavaScript (yellow) ────────────────────────────────────────────
@@ -58,9 +59,12 @@ const EXT_COLOR_MAP: Record<string, ColorGroup> = {
   // ── Git (orange — official Git orange) ─────────────────────────────
   git: 'orange', gitignore: 'orange', gitattributes: 'orange', gitmodules: 'orange',
 
-  // ── Config / Data ──────────────────────────────────────────────────
-  json: 'amber', json5: 'amber', jsonc: 'amber', jsonl: 'amber', ndjson: 'amber',
-  yaml: 'gray', yml: 'gray', toml: 'gray', xml: 'orange', csv: 'green', tsv: 'green',
+  // ── JSON / Data (teal — structured data) ───────────────────────────
+  json: 'teal', json5: 'teal', jsonc: 'teal', jsonl: 'teal', ndjson: 'teal',
+
+  // ── YAML / TOML / Config (lime — config files) ───────────────────
+  yaml: 'lime', yml: 'lime', toml: 'lime',
+  xml: 'orange', csv: 'green', tsv: 'green',
   ini: 'gray', cfg: 'gray', conf: 'gray', properties: 'gray',
   lock: 'gray', lockb: 'gray',
   lic: 'gray', license: 'gray',
@@ -83,8 +87,11 @@ const EXT_COLOR_MAP: Record<string, ColorGroup> = {
   // ── CSS (indigo — CSS3 blue) ───────────────────────────────────────
   css: 'indigo', less: 'indigo', styl: 'indigo', stylus: 'indigo',
 
-  // ── SCSS / Sass / GraphQL (pink — Sass pink) ──────────────────────
-  scss: 'pink', sass: 'pink', graphql: 'pink', gql: 'pink',
+  // ── SCSS / Sass (pink — Sass pink) ─────────────────────────────────
+  scss: 'pink', sass: 'pink',
+
+  // ── GraphQL (fuchsia — GraphQL magenta) ───────────────────────────
+  graphql: 'fuchsia', gql: 'fuchsia',
 
   // ── Python (cyan — Python blue-green) ──────────────────────────────
   py: 'cyan', pyi: 'cyan', pyx: 'cyan', pyw: 'cyan', ipynb: 'cyan',
@@ -176,6 +183,10 @@ const COLOR_CLASSES: Record<ColorGroup, { body: string; fold: string; label: str
   stone:   { body: 'vft-ficon-stone-body',    fold: 'vft-ficon-stone-fold',   label: 'vft-ficon-stone-label' },
   green:   { body: 'vft-ficon-green-body',    fold: 'vft-ficon-green-fold',   label: 'vft-ficon-green-label' },
   neutral: { body: 'vft-ficon-neutral-body',  fold: 'vft-ficon-neutral-fold', label: 'vft-ficon-neutral-label' },
+  teal:    { body: 'vft-ficon-teal-body',     fold: 'vft-ficon-teal-fold',    label: 'vft-ficon-teal-label' },
+  lime:    { body: 'vft-ficon-lime-body',     fold: 'vft-ficon-lime-fold',    label: 'vft-ficon-lime-label' },
+  fuchsia: { body: 'vft-ficon-fuchsia-body',  fold: 'vft-ficon-fuchsia-fold', label: 'vft-ficon-fuchsia-label' },
+  yellow:  { body: 'vft-ficon-yellow-body',   fold: 'vft-ficon-yellow-fold',  label: 'vft-ficon-yellow-label' },
 };
 
 const color = computed<ColorGroup>(() => EXT_COLOR_MAP[props.ext] ?? 'neutral');
