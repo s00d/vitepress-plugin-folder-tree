@@ -58,9 +58,9 @@ const EXT_COLOR_MAP: Record<string, ColorGroup> = {
   // ── Git (orange — official Git orange) ─────────────────────────────
   git: 'orange', gitignore: 'orange', gitattributes: 'orange', gitmodules: 'orange',
 
-  // ── Config / Data (gray — neutral structural files) ────────────────
-  json: 'gray', json5: 'gray', jsonc: 'gray', jsonl: 'gray', ndjson: 'gray',
-  yaml: 'gray', yml: 'gray', toml: 'gray', xml: 'gray', csv: 'gray', tsv: 'gray',
+  // ── Config / Data ──────────────────────────────────────────────────
+  json: 'amber', json5: 'amber', jsonc: 'amber', jsonl: 'amber', ndjson: 'amber',
+  yaml: 'gray', yml: 'gray', toml: 'gray', xml: 'orange', csv: 'green', tsv: 'green',
   ini: 'gray', cfg: 'gray', conf: 'gray', properties: 'gray',
   lock: 'gray', lockb: 'gray',
   lic: 'gray', license: 'gray',
