@@ -44,7 +44,7 @@ yarn add vitepress-plugin-folder-tree
 
 ### Configure
 
-`.vitepress/config.mts`:
+**1. VitePress config** — `.vitepress/config.mts`:
 
 ```ts
 import { defineConfig } from 'vitepress'
@@ -54,6 +54,19 @@ export default withFolderTree(
   defineConfig({ title: 'My Docs' })
 )
 ```
+
+**2. Import styles** — `.vitepress/theme/index.ts`:
+
+```ts
+import DefaultTheme from 'vitepress/theme'
+import 'vitepress-plugin-folder-tree/style.css'
+
+export default {
+  extends: DefaultTheme,
+}
+```
+
+> CSS is shipped as a separate file for better performance, caching, and CSP compatibility.
 
 ### Use
 
@@ -109,13 +122,28 @@ Paste `tree` command output — auto-detected by `├──` / `└──` chara
 
 ### External URL
 
-Load tree from a separate file (YAML, JSON, or JS module):
+Load tree from a separate file (YAML, JSON, or JS module). All URL resolution happens **at build time** — no client-side fetching:
 
 ````yaml
 ```tree
 url: /trees/my-project.yaml
 ```
 ````
+
+JS modules run in Node.js at build time, so you can use `fs.readFileSync`, `fetch()` for remote APIs, or any Node API:
+
+```js
+// public/trees/my-project.js
+import { readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+export default function () {
+  const __dir = dirname(fileURLToPath(import.meta.url));
+  const data = JSON.parse(readFileSync(join(__dir, 'data.json'), 'utf-8'));
+  return [{ name: 'project', children: data.files }];
+}
+```
 
 ### Filesystem scan
 

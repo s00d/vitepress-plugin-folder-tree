@@ -857,18 +857,24 @@ url: /trees/vue-project.yaml
 url: /trees/vue-project.yaml
 ```
 
-### JS module (async)
+### JS module (local file)
 
-JS files use `export default` — supports arrays, objects, and **async functions**. This example fetches `/trees/vue-project-data.json` at runtime and builds the tree from it:
+JS files use `export default` — supports arrays, objects, and functions. The module is executed **at build time** in Node.js, so you can use `fs`, `path`, and other Node APIs.
+
+This example reads a local JSON file and builds the tree from it:
 
 <details>
 <summary>Show vue-project.js</summary>
 
 ```js
 // public/trees/vue-project.js
-export default async function () {
-  const res = await fetch('/trees/vue-project-data.json');
-  const data = await res.json();
+import { readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+export default function () {
+  const __dir = dirname(fileURLToPath(import.meta.url));
+  const data = JSON.parse(readFileSync(join(__dir, 'vue-project-data.json'), 'utf-8'));
 
   return [
     {
@@ -901,6 +907,36 @@ url: /trees/vue-project.js
 ```tree
 url: /trees/vue-project.js
 ```
+
+### JS module (fetch)
+
+You can also use `fetch()` to load data from an HTTP URL. The function can be `async`:
+
+<details>
+<summary>Show example</summary>
+
+```js
+// public/trees/remote-project.js
+export default async function () {
+  const res = await fetch('https://api.example.com/project-structure.json');
+  const data = await res.json();
+
+  return [
+    {
+      name: data.name,
+      children: data.files.map(f => ({ name: f })),
+    },
+  ];
+}
+```
+
+</details>
+
+````yaml
+```tree
+url: /trees/remote-project.js
+```
+````
 
 ### URL + options
 

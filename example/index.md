@@ -1,6 +1,6 @@
 # VitePress Plugin Folder Tree
 
-A **zero-config** plugin for VitePress — render beautiful, interactive file/folder tree diagrams from YAML in markdown code blocks.
+A plugin for VitePress — render beautiful, interactive file/folder tree diagrams from YAML in markdown code blocks.
 
 ## Quick Start
 
@@ -37,6 +37,14 @@ A **zero-config** plugin for VitePress — render beautiful, interactive file/fo
             - en.json
             - fr.json
             - ar.json
+        - name: about
+          children:
+            - en.json
+            - fr.json
+            - ar.json
+    - en.json
+    - fr.json
+    - ar.json
 ```
 ````
 
@@ -64,6 +72,8 @@ pnpm add vitepress-plugin-folder-tree
 
 ## Setup
 
+**1. VitePress config** — `.vitepress/config.mts`:
+
 ```ts
 import { defineConfig } from 'vitepress'
 import { withFolderTree } from 'vitepress-plugin-folder-tree'
@@ -72,6 +82,19 @@ export default withFolderTree(defineConfig({
   title: "My Site",
 }))
 ```
+
+**2. Import styles** — `.vitepress/theme/index.ts`:
+
+```ts
+import DefaultTheme from 'vitepress/theme'
+import 'vitepress-plugin-folder-tree/style.css'
+
+export default {
+  extends: DefaultTheme,
+}
+```
+
+> CSS is shipped as a separate file for better performance, caching, and CSP compatibility.
 
 ## All Node Fields Demo
 

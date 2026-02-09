@@ -1,12 +1,12 @@
 import { type UserConfig } from 'vitepress';
-import { FolderTreeMarkdown } from './folder-tree-markdown';
+import { FolderTreeMarkdown } from './markdown';
 import { FolderTreePlugin } from './folder-tree-plugin';
 import type { PluginConfig } from './config';
 
-export { FolderTreeMarkdown } from './folder-tree-markdown';
+export { FolderTreeMarkdown } from './markdown';
 export { FolderTreePlugin } from './folder-tree-plugin';
-export { parseTree, validateTreeInput, parseAsciiTree, isAsciiTree, scanDirectory } from './folder-tree-markdown';
-export type { ValidationResult, ParsedTreeData } from './folder-tree-markdown';
+export { parseTree, validateTreeInput, validateTreeData, parseAsciiTree, isAsciiTree, scanDirectory, convertItems, resolveUrl } from './markdown';
+export type { ValidationResult, ParsedTreeData, ResolveResult } from './markdown';
 export * from './config';
 
 export { UserConfig };

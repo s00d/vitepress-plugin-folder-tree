@@ -1,3 +1,4 @@
+import './styles/tailwind.css';
 import VpFolderTree from './VpFolderTree.vue';
 
-export { VpFolderTree };
+export default VpFolderTree;

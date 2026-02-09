@@ -1,0 +1,368 @@
+@import "tailwindcss/theme" prefix(vft);
+@import "tailwindcss/utilities" prefix(vft);
+
+@theme {
+  /* ─── VitePress color tokens ────────────────────────────────────── */
+  --color-vp-bg: var(--vp-c-bg, #fff);
+  --color-vp-bg-alt: var(--vp-c-bg-alt, #f9f9fa);
+  --color-vp-bg-soft: var(--vp-c-bg-soft, #f6f6f7);
+  --color-vp-text-1: var(--vp-c-text-1, #213547);
+  --color-vp-text-2: var(--vp-c-text-2, #595959);
+  --color-vp-text-3: var(--vp-c-text-3, #8e8e93);
+  --color-vp-divider: var(--vp-c-divider, #e2e2e3);
+  --color-vp-brand: var(--vp-c-brand-1, #3451b2);
+  --color-vp-brand-soft: var(--vp-c-brand-soft, rgba(100, 108, 255, 0.14));
+  --color-vp-default-soft: var(--vp-c-default-soft, rgba(142, 150, 170, 0.12));
+
+  /* ─── Font families ─────────────────────────────────────────────── */
+  --font-family-vp: var(--vp-font-family-base, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
+  --font-family-vp-mono: var(--vp-font-family-mono, 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace);
+
+  /* ─── Custom animation ──────────────────────────────────────────── */
+  --animate-flash: vft-flash 2s ease-out;
+}
+
+@keyframes vft-flash {
+  0%   { box-shadow: 0 0 0 0 var(--color-vp-brand, rgba(52, 81, 178, 0.5)); }
+  40%  { box-shadow: 0 0 0 4px var(--color-vp-brand, rgba(52, 81, 178, 0.2)); }
+  100% { box-shadow: 0 0 0 0 var(--color-vp-brand, rgba(52, 81, 178, 0)); }
+}
+
+/* ─── VitePress list style overrides ─────────────────────────────── */
+@layer base {
+  .vft-tree ul {
+    @apply vft:!list-none vft:!m-0 vft:!leading-[inherit];
+  }
+  .vft-tree li {
+    @apply vft:!list-none vft:!m-0 vft:!p-0 vft:!leading-[inherit];
+  }
+  .vft-tree li::before,
+  .vft-tree li::marker {
+    content: none !important;
+    @apply vft:!hidden;
+  }
+  :where(.vft-tree ul) :where(div, span) {
+    @apply vft:m-0 vft:p-0;
+  }
+
+  /* Branch hover highlight (toggled by JS) */
+  .vft-on-branch {
+    @apply vft:bg-vp-bg-soft;
+  }
+}
+
+/* ─── Component classes ─────────────────────────────────────────── */
+
+/* ── Button ──────────────────────────────────────────────────────── */
+.vft-btn {
+  @apply vft:inline-flex vft:items-center vft:justify-center vft:w-6 vft:h-6 vft:p-0 vft:border-none vft:rounded-sm vft:bg-transparent vft:text-vp-text-3 vft:cursor-pointer vft:transition-colors vft:select-none vft:leading-none;
+  font: inherit;
+  &:hover { @apply vft:bg-vp-bg-soft vft:text-vp-text-1; }
+  &:active { @apply vft:bg-vp-default-soft; }
+}
+
+/* ── Button icon (SVG inside .vft-btn) ───────────────────────────── */
+.vft-btn-icon {
+  @apply vft:shrink-0;
+}
+
+/* ── Separator ───────────────────────────────────────────────────── */
+.vft-sep {
+  @apply vft:inline-block vft:w-px vft:h-3.5 vft:bg-vp-divider vft:mx-1 vft:shrink-0 vft:opacity-60;
+}
+
+/* ── Error block (build-time) ────────────────────────────────────── */
+.vft-error-block {
+  @apply vft:px-4 vft:py-3 vft:my-4 vft:rounded-lg vft:border vft:border-red-300 vft:bg-red-50 vft:text-[13px] vft:leading-normal;
+}
+.vft-error-title {
+  @apply vft:block vft:font-bold vft:text-red-600 vft:mb-1;
+}
+.vft-error-list {
+  @apply vft:list-none vft:m-0 vft:pl-[1.2em] vft:text-red-600;
+}
+.vft-error-item {
+  @apply vft:relative;
+  &::before {
+    content: '\2022';
+    @apply vft:absolute vft:-left-[0.9em] vft:text-red-400;
+  }
+}
+.vft-error-text {
+  @apply vft:mt-1 vft:text-red-600;
+}
+.vft-error-warnings {
+  @apply vft:list-none vft:mt-1 vft:pl-[1.2em] vft:text-amber-700;
+}
+
+/* ── Warning block (build-time) ──────────────────────────────────── */
+.vft-warning-block {
+  @apply vft:py-2 vft:px-3 vft:mb-1 vft:rounded-md vft:border vft:border-amber-200 vft:bg-amber-50 vft:text-xs vft:leading-snug vft:text-amber-800;
+}
+.vft-warning-title {
+  @apply vft:font-bold vft:mr-1;
+}
+.vft-warning-list {
+  @apply vft:list-none vft:mt-0.5 vft:pl-[1.2em];
+}
+
+/* ── Tree container ──────────────────────────────────────────────── */
+.vft-container {
+  @apply vft:my-4 vft:border vft:border-vp-divider vft:rounded-lg vft:bg-vp-bg-alt vft:overflow-hidden vft:text-[13px] vft:leading-tight vft:select-none;
+  font-family: var(--font-family-vp);
+}
+.vft-focus-wrap {
+  @apply vft:focus:outline-none vft:focus-visible:outline-2 vft:focus-visible:outline-vp-brand vft:focus-visible:-outline-offset-2;
+}
+.vft-tree-list {
+  @apply vft:py-0.5 vft:px-0 vft:m-0 vft:list-none;
+}
+.vft-no-results {
+  @apply vft:p-4 vft:text-vp-text-3 vft:text-xs vft:text-center;
+}
+
+/* ── Row (FolderNode + FileNode) ─────────────────────────────────── */
+.vft-row {
+  @apply vft:flex vft:flex-row vft:flex-nowrap vft:items-center vft:gap-[1px] vft:h-6 vft:pr-2 vft:pl-1.5 vft:rounded vft:mx-1 vft:cursor-default vft:transition-colors vft:duration-100 vft:select-none;
+  &:hover { @apply vft:bg-vp-bg-soft; }
+  &:focus { @apply vft:outline-none; }
+  &:focus-visible { @apply vft:outline-2 vft:outline-vp-brand vft:-outline-offset-2; }
+  &.is-focused { @apply vft:bg-vp-brand-soft vft:animate-flash; }
+  &.is-pointer { @apply vft:cursor-pointer; }
+  &.is-highlighted { @apply vft:bg-vp-brand-soft; }
+}
+
+/* ── Indent / spacer ─────────────────────────────────────────────── */
+.vft-indent {
+  @apply vft:inline-block vft:shrink-0 vft:relative;
+}
+.vft-spacer {
+  @apply vft:inline-block vft:w-3.5 vft:h-3.5 vft:shrink-0;
+}
+
+/* ── Chevron ─────────────────────────────────────────────────────── */
+.vft-chevron {
+  @apply vft:inline-block vft:shrink-0 vft:w-3.5 vft:h-3.5 vft:transition-transform vft:duration-150 vft:text-vp-text-3 vft:align-middle vft:opacity-60;
+  &.is-open { @apply vft:rotate-90; }
+  &.is-disabled { @apply vft:opacity-25; }
+}
+
+/* ── Icon containers ─────────────────────────────────────────────── */
+.vft-icon {
+  @apply vft:inline-block vft:shrink-0 vft:w-4 vft:h-4 vft:mx-[3px] vft:align-middle;
+}
+.vft-icon--emoji {
+  @apply vft:inline-flex vft:shrink-0 vft:w-4 vft:h-4 vft:mx-[3px] vft:items-center vft:justify-center vft:text-[13px] vft:leading-none vft:align-middle;
+}
+
+/* ── Node names ──────────────────────────────────────────────────── */
+.vft-folder-name {
+  @apply vft:whitespace-nowrap vft:overflow-hidden vft:text-ellipsis vft:font-semibold vft:text-vp-text-1;
+  &.is-deleted { @apply vft:line-through vft:opacity-60; }
+}
+.vft-file-name {
+  @apply vft:whitespace-nowrap vft:overflow-hidden vft:text-ellipsis vft:text-vp-text-2;
+  &.is-deleted { @apply vft:line-through vft:opacity-60; }
+}
+
+/* ── Node links ──────────────────────────────────────────────────── */
+.vft-folder-link {
+  @apply vft:text-vp-brand vft:no-underline vft:whitespace-nowrap vft:overflow-hidden vft:text-ellipsis vft:font-semibold;
+  &:hover { @apply vft:underline; }
+  &.is-deleted { @apply vft:line-through vft:opacity-60; }
+}
+.vft-file-link {
+  @apply vft:text-vp-brand vft:no-underline vft:whitespace-nowrap vft:overflow-hidden vft:text-ellipsis;
+  &:hover { @apply vft:underline; }
+  &.is-deleted { @apply vft:line-through vft:opacity-60; }
+}
+
+/* ── Lock icon ───────────────────────────────────────────────────── */
+.vft-lock {
+  @apply vft:inline-block vft:shrink-0 vft:w-[11px] vft:h-[11px] vft:ml-1 vft:align-middle vft:text-vp-text-3 vft:opacity-45;
+}
+
+/* ── Search highlight mark ───────────────────────────────────────── */
+.vft-search-mark {
+  @apply vft:bg-vp-brand-soft vft:text-inherit vft:rounded-sm vft:px-[1px];
+}
+
+/* ── Collapse container ──────────────────────────────────────────── */
+.vft-collapse {
+  @apply vft:grid vft:[grid-template-rows:0fr] vft:transition-[grid-template-rows] vft:duration-200 vft:ease-out;
+  &.is-open { @apply vft:[grid-template-rows:1fr]; }
+}
+
+/* ── Branch guide line ───────────────────────────────────────────── */
+.vft-branch-group {
+  position: relative;
+}
+.vft-guide {
+  @apply vft:absolute vft:top-0 vft:bottom-2 vft:w-px vft:bg-vp-divider vft:pointer-events-none vft:opacity-40 vft:transition-opacity vft:duration-150;
+}
+.vft-branch-group:hover > .vft-guide {
+  @apply vft:opacity-80;
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────────── */
+.vft-toolbar {
+  @apply vft:flex vft:items-center vft:h-9 vft:px-2 vft:border-b vft:border-vp-divider vft:bg-vp-bg vft:gap-0.5;
+}
+
+/* ── Search ──────────────────────────────────────────────────────── */
+.vft-search-wrap {
+  @apply vft:relative vft:inline-flex vft:items-center vft:ml-auto;
+}
+.vft-search-icon {
+  @apply vft:absolute vft:left-1.5 vft:pointer-events-none vft:text-vp-text-3;
+}
+.vft-search-input {
+  @apply vft:h-6 vft:pl-6 vft:pr-2 vft:border vft:border-transparent vft:rounded vft:bg-vp-bg-soft vft:text-vp-text-1 vft:text-xs vft:font-[inherit] vft:outline-none vft:w-[120px] vft:transition-all;
+  &:focus { @apply vft:bg-vp-bg vft:border-vp-brand vft:w-40 vft:shadow-[0_0_0_2px_var(--color-vp-brand-soft)]; }
+}
+.vft-search-clear {
+  @apply vft:absolute vft:right-1 vft:top-1/2 vft:-translate-y-1/2 vft:bg-transparent vft:border-none vft:text-vp-text-3 vft:cursor-pointer vft:text-xs vft:leading-none vft:px-0.5 vft:rounded-sm;
+  &:hover { @apply vft:text-vp-text-1 vft:bg-vp-bg-soft; }
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────────── */
+.vft-tab-bar {
+  @apply vft:flex vft:overflow-x-auto vft:bg-vp-bg-soft vft:border-b vft:border-vp-divider vft:pt-1 vft:px-1 vft:gap-0.5;
+}
+.vft-tab {
+  @apply vft:px-3.5 vft:py-[5px] vft:text-xs vft:font-[inherit] vft:rounded-t-md vft:border vft:border-transparent vft:border-b-0 vft:bg-transparent vft:text-vp-text-2 vft:cursor-pointer vft:opacity-70 vft:transition-all vft:whitespace-nowrap vft:select-none;
+  &:hover { @apply vft:opacity-100 vft:bg-vp-bg; }
+  &.is-active { @apply vft:bg-vp-bg vft:border-vp-divider vft:border-b-vp-bg vft:text-vp-text-1 vft:opacity-100 vft:font-semibold vft:-mb-px; }
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+.vft-footer {
+  @apply vft:flex vft:items-center vft:gap-1 vft:px-3 vft:py-[5px] vft:border-t vft:border-vp-divider vft:bg-vp-bg vft:text-vp-text-3 vft:text-[11px] vft:leading-none vft:opacity-70;
+}
+.vft-footer-dot {
+  @apply vft:mx-0.5 vft:opacity-50;
+}
+
+/* ── Collapse inner ──────────────────────────────────────────────── */
+.vft-collapse-inner {
+  @apply vft:overflow-hidden;
+}
+.vft-children-list {
+  @apply vft:m-0 vft:p-0 vft:list-none;
+}
+
+/* ── Context menu panel ──────────────────────────────────────────── */
+.vft-ctx-panel {
+  @apply vft:z-[100] vft:min-w-40 vft:bg-vp-bg vft:border vft:border-vp-divider vft:rounded-lg vft:shadow-lg vft:p-1 vft:text-[13px] vft:backdrop-blur-xl;
+}
+.vft-ctx-item {
+  @apply vft:px-2.5 vft:py-1.5 vft:rounded vft:cursor-default vft:text-vp-text-1 vft:transition-colors;
+  &:hover { @apply vft:bg-vp-brand vft:text-white; }
+}
+
+/* ── Dropdown panel ──────────────────────────────────────────────── */
+.vft-dropdown-panel {
+  @apply vft:z-50 vft:bg-vp-bg vft:border vft:border-vp-divider vft:rounded-lg vft:shadow-lg vft:p-1 vft:min-w-[100px];
+}
+.vft-dropdown-item {
+  @apply vft:block vft:w-full vft:py-[5px] vft:px-2.5 vft:border-none vft:rounded vft:bg-transparent vft:text-left vft:text-xs vft:font-[inherit] vft:cursor-pointer vft:text-vp-text-1 vft:leading-normal;
+  &:hover { @apply vft:bg-vp-brand vft:text-white; }
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────────── */
+.vft-tooltip {
+  @apply vft:z-[101] vft:bg-[#202020] vft:text-[#e8e8e8] vft:border vft:border-[#333] vft:px-3 vft:py-2 vft:rounded-md vft:text-xs vft:leading-relaxed vft:max-w-[360px] vft:whitespace-pre vft:pointer-events-none vft:shadow-lg;
+  font-family: var(--font-family-vp-mono);
+}
+.vft-tooltip-pre {
+  @apply vft:m-0 vft:font-[inherit] vft:text-[inherit] vft:whitespace-pre vft:overflow-x-auto;
+}
+
+/* ── Badge / Note ────────────────────────────────────────────────── */
+.vft-badge {
+  @apply vft:inline-block vft:ml-1.5 vft:px-1.5 vft:rounded-full vft:bg-vp-bg-soft vft:text-vp-text-3 vft:text-[10px] vft:whitespace-nowrap vft:shrink-0 vft:h-4 vft:leading-4;
+}
+.vft-note {
+  @apply vft:inline-block vft:ml-auto vft:px-2 vft:text-vp-text-3 vft:text-[11px] vft:whitespace-nowrap vft:shrink-0 vft:opacity-70;
+}
+
+/* ── Status badge (git) ──────────────────────────────────────────── */
+.vft-status-indicator {
+  @apply vft:inline-flex vft:items-center vft:justify-center vft:w-3.5 vft:h-3.5 vft:rounded vft:text-white vft:text-[9px] vft:font-semibold vft:shrink-0 vft:mr-0.5 vft:leading-none;
+}
+
+/* ── Status row colors ───────────────────────────────────────────── */
+.vft-status-added    { @apply vft:bg-green-500/[0.06] vft:border-l-2 vft:border-l-green-500; }
+.vft-status-removed  { @apply vft:bg-red-500/[0.06] vft:border-l-2 vft:border-l-red-500; }
+.vft-status-modified { @apply vft:bg-amber-500/[0.06] vft:border-l-2 vft:border-l-amber-500; }
+
+.vft-status-badge-added    { @apply vft:bg-green-600; }
+.vft-status-badge-removed  { @apply vft:bg-red-600; }
+.vft-status-badge-modified { @apply vft:bg-amber-600; }
+
+.vft-status-name-added    { @apply vft:text-green-600; }
+.vft-status-name-removed  { @apply vft:text-red-600; }
+.vft-status-name-modified { @apply vft:text-amber-600; }
+
+/* ── Folder icon SVG colors ──────────────────────────────────────── */
+.vft-folder-open-body  { @apply vft:fill-amber-500 vft:stroke-amber-700; }
+.vft-folder-open-flap  { @apply vft:fill-amber-400 vft:stroke-amber-700; }
+.vft-folder-closed     { @apply vft:fill-amber-600 vft:stroke-amber-700; }
+
+/* ── File icon SVG color groups ──────────────────────────────────── */
+.vft-ficon-amber-body   { @apply vft:fill-amber-200 vft:stroke-amber-500; }
+.vft-ficon-amber-fold   { @apply vft:stroke-amber-500; }
+.vft-ficon-amber-label  { @apply vft:fill-amber-800; }
+.vft-ficon-blue-body    { @apply vft:fill-blue-200 vft:stroke-blue-500; }
+.vft-ficon-blue-fold    { @apply vft:stroke-blue-500; }
+.vft-ficon-blue-label   { @apply vft:fill-blue-900; }
+.vft-ficon-emerald-body { @apply vft:fill-emerald-200 vft:stroke-emerald-500; }
+.vft-ficon-emerald-fold { @apply vft:stroke-emerald-500; }
+.vft-ficon-emerald-label{ @apply vft:fill-emerald-800; }
+.vft-ficon-orange-body  { @apply vft:fill-orange-200 vft:stroke-orange-600; }
+.vft-ficon-orange-fold  { @apply vft:stroke-orange-600; }
+.vft-ficon-orange-label { @apply vft:fill-orange-900; }
+.vft-ficon-gray-body    { @apply vft:fill-gray-300 vft:stroke-gray-400; }
+.vft-ficon-gray-fold    { @apply vft:stroke-gray-400; }
+.vft-ficon-gray-label   { @apply vft:fill-gray-600; }
+.vft-ficon-sky-body     { @apply vft:fill-sky-200 vft:stroke-sky-500; }
+.vft-ficon-sky-fold     { @apply vft:stroke-sky-500; }
+.vft-ficon-sky-label    { @apply vft:fill-sky-800; }
+.vft-ficon-indigo-body  { @apply vft:fill-indigo-200 vft:stroke-indigo-500; }
+.vft-ficon-indigo-fold  { @apply vft:stroke-indigo-500; }
+.vft-ficon-indigo-label { @apply vft:fill-indigo-900; }
+.vft-ficon-pink-body    { @apply vft:fill-pink-200 vft:stroke-pink-500; }
+.vft-ficon-pink-fold    { @apply vft:stroke-pink-500; }
+.vft-ficon-pink-label   { @apply vft:fill-pink-800; }
+.vft-ficon-cyan-body    { @apply vft:fill-cyan-200 vft:stroke-cyan-600; }
+.vft-ficon-cyan-fold    { @apply vft:stroke-cyan-600; }
+.vft-ficon-cyan-label   { @apply vft:fill-cyan-800; }
+.vft-ficon-red-body     { @apply vft:fill-red-200 vft:stroke-red-600; }
+.vft-ficon-red-fold     { @apply vft:stroke-red-600; }
+.vft-ficon-red-label    { @apply vft:fill-red-900; }
+.vft-ficon-violet-body  { @apply vft:fill-violet-200 vft:stroke-violet-600; }
+.vft-ficon-violet-fold  { @apply vft:stroke-violet-600; }
+.vft-ficon-violet-label { @apply vft:fill-violet-900; }
+.vft-ficon-rose-body    { @apply vft:fill-rose-200 vft:stroke-rose-500; }
+.vft-ficon-rose-fold    { @apply vft:stroke-rose-500; }
+.vft-ficon-rose-label   { @apply vft:fill-rose-800; }
+.vft-ficon-slate-body   { @apply vft:fill-slate-300 vft:stroke-slate-500; }
+.vft-ficon-slate-fold   { @apply vft:stroke-slate-500; }
+.vft-ficon-slate-label  { @apply vft:fill-slate-700; }
+.vft-ficon-stone-body   { @apply vft:fill-stone-300 vft:stroke-stone-500; }
+.vft-ficon-stone-fold   { @apply vft:stroke-stone-500; }
+.vft-ficon-stone-label  { @apply vft:fill-stone-700; }
+.vft-ficon-green-body   { @apply vft:fill-green-200 vft:stroke-green-500; }
+.vft-ficon-green-fold   { @apply vft:stroke-green-500; }
+.vft-ficon-green-label  { @apply vft:fill-green-800; }
+.vft-ficon-neutral-body { @apply vft:fill-neutral-200 vft:stroke-neutral-400; }
+.vft-ficon-neutral-fold { @apply vft:stroke-neutral-400; }
+.vft-ficon-neutral-label{ @apply vft:fill-neutral-500; }
+
+/* ─── Reduced motion ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .vft-tree * {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}

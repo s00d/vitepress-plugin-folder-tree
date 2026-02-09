@@ -1,10 +1,14 @@
-// Async JS module — fetches external data and builds the tree dynamically
-// Demonstrates: export default async function, fetch(), dynamic tree generation
+// JS module — reads local data and builds the tree dynamically
+// Demonstrates: export default function, fs.readFileSync(), dynamic tree generation
 
-export default async function () {
-  // Load project metadata from a separate JSON file
-  const res = await fetch('/trees/vue-project-data.json');
-  const data = await res.json();
+import { readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+export default function () {
+  // Load project metadata from a JSON file in the same directory
+  const __dir = dirname(fileURLToPath(import.meta.url));
+  const data = JSON.parse(readFileSync(join(__dir, 'vue-project-data.json'), 'utf-8'));
 
   return [
     {
