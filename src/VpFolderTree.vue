@@ -13,7 +13,6 @@
         :copy-label="copyLabel"
         :shell-copied="shellCopied"
         :search-query="searchQuery"
-        :show-download-menu="showDownloadMenu"
         @expand-all="onExpandAll"
         @collapse-all="onCollapseAll"
         @copy="copyAsText"
@@ -21,7 +20,6 @@
         @search="onSearch"
         @download="downloadAs"
         @update:search-query="searchQuery = $event"
-        @update:show-download-menu="showDownloadMenu = $event"
       />
       <!-- Tabs -->
       <TreeTabs :tabs="tabs" :active-tab="activeTab" @select="currentTab = $event" />
@@ -156,10 +154,10 @@ const { handleKeydown, handleHoverBranch, clearHover } = useTreeKeyboard(
 const {
   copyLabel,
   shellCopied,
-  showDownloadMenu,
   copyAsText,
   generateShellScript,
   downloadAs,
+  copyPreview,
 } = useTreeClipboard(currentTreeData);
 
 // ─── Statistics ──────────────────────────────────────────────────────
@@ -184,6 +182,7 @@ provide(FOLDER_TREE_CTX_KEY, {
   handleHoverBranch,
   onNodeTooltipEnter,
   onNodeTooltipLeave,
+  copyPreview,
 });
 
 // ─── Event handlers ──────────────────────────────────────────────────

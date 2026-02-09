@@ -163,6 +163,11 @@ export const FolderTreeMarkdown = (md: any, pluginConfig: PluginConfig = {}) => 
         if (parsed.from) {
           try {
             const tree = processFsScan(parsed as any, rootDir);
+            // When openDepth is set, nodes carry their own `open` state
+            // so we force defaultOpen=false to respect per-node values.
+            if (typeof parsed.openDepth === 'number') {
+              blockOpts.defaultOpen = false;
+            }
             return buildTag(encodeData(tree), blockOpts);
           } catch (e: any) {
             return renderError('Folder Tree Error', [e.message]);

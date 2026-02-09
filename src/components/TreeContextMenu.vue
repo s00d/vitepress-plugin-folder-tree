@@ -8,6 +8,7 @@
     <div class="vft-ctx-panel" @click.stop>
       <div class="vft-ctx-item" @click="$emit('copy', 'name')">Copy Name</div>
       <div class="vft-ctx-item" @click="$emit('copy', 'path')">Copy Path</div>
+      <div v-if="menu.preview" class="vft-ctx-item" @click="$emit('copy', 'content')">Copy Content</div>
     </div>
   </FloatingPanel>
 </template>
@@ -17,5 +18,5 @@ import FloatingPanel from './FloatingPanel.vue';
 import type { CtxMenuState } from '../utils/types';
 
 defineProps<{ menu: CtxMenuState }>();
-defineEmits<{ copy: [type: 'name' | 'path']; close: [] }>();
+defineEmits<{ copy: [type: 'name' | 'path' | 'content']; close: [] }>();
 </script>

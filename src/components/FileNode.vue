@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="visible"
-    :class="['vft-row', { 'is-focused': isFocused, 'is-highlighted': !statusColor && node.highlight }, extraRowClass]"
+    :class="['vft-row', { 'is-focused': isFocused, 'is-highlighted': !statusColor && node.highlight, 'is-pointer': !!node.preview }, extraRowClass]"
     :data-path="path"
     tabindex="-1"
     role="none"
@@ -114,6 +114,10 @@ const searchMatch = computed(() => {
 function onClick(e: MouseEvent) {
   if (e.ctrlKey || e.metaKey) {
     ctx.onNodeContextMenu(e, props.node, props.path);
+    return;
+  }
+  if (props.node.preview) {
+    ctx.copyPreview(props.node);
   }
 }
 

@@ -9,25 +9,20 @@ export function useTreeTooltip() {
     y: 0,
   });
 
-  let hoverTimer: ReturnType<typeof setTimeout> | null = null;
-
   function onNodeTooltipEnter(e: MouseEvent, node: TreeNode) {
     if (!node.preview) return;
-    hoverTimer = setTimeout(() => {
-      tooltip.text = node.preview!;
-      tooltip.x = e.clientX + 15;
-      tooltip.y = e.clientY + 10;
-      tooltip.visible = true;
-    }, 600);
+    tooltip.text = node.preview!;
+    tooltip.x = e.clientX + 15;
+    tooltip.y = e.clientY + 10;
+    tooltip.visible = true;
   }
 
   function onNodeTooltipLeave() {
-    if (hoverTimer) clearTimeout(hoverTimer);
     tooltip.visible = false;
   }
 
   function cleanup() {
-    if (hoverTimer) clearTimeout(hoverTimer);
+    tooltip.visible = false;
   }
 
   return { tooltip, onNodeTooltipEnter, onNodeTooltipLeave, cleanup };

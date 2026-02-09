@@ -10,6 +10,7 @@ export interface CtxMenuState {
   y: number;
   path: string;
   name: string;
+  preview: string;
 }
 
 /** Preview tooltip reactive state */
@@ -54,4 +55,5 @@ export interface FolderTreeContext {
   handleHoverBranch: (path: string) => void;
   onNodeTooltipEnter: (e: MouseEvent, node: TreeNode) => void;
   onNodeTooltipLeave: () => void;
+  copyPreview: (node: TreeNode) => void;
 }

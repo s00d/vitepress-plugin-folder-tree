@@ -1161,9 +1161,94 @@ exclude:
   - "*.vue"
 ```
 
-## Preview Tooltip
+### With file content preview
 
-Add `preview` to show code or text in a tooltip on hover (appears after 600ms):
+Enable `preview: true` to read file contents at build time. Hover any file to see its content, click to copy:
+
+<details>
+<summary>Show code</summary>
+
+````yaml
+```tree
+from: ../src/composables
+preview: true
+depth: 2
+```
+````
+
+</details>
+
+```tree
+from: ../src/composables
+preview: true
+depth: 2
+```
+
+### With limits
+
+Control preview size and open depth:
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `preview` | `boolean` | `false` | Read file contents into tooltip |
+| `maxPreviewSize` | `number` | `4096` | Max file size in bytes for preview |
+| `previewExtensions` | `string[]` | common text exts | Which extensions to read |
+| `openDepth` | `number` | `-1` (all) | Max depth to auto-open (`0` = all closed, `1` = only root, etc.) |
+
+<details>
+<summary>Show code</summary>
+
+````yaml
+```tree
+from: ../src/utils
+preview: true
+maxPreviewSize: 2048
+openDepth: 1
+```
+````
+
+</details>
+
+```tree
+from: ../src/utils
+preview: true
+maxPreviewSize: 2048
+openDepth: 1
+```
+
+### Open depth only
+
+Use `openDepth` without `preview` to control how many levels are expanded:
+
+<details>
+<summary>Show code</summary>
+
+````yaml
+```tree
+from: ../src
+openDepth: 0
+depth: 3
+```
+````
+
+</details>
+
+```tree
+from: ../src
+openDepth: 0
+depth: 3
+```
+
+## Preview & File Content
+
+Add `preview` to any file node to attach its content. This enables three features:
+
+| Action | Behavior |
+|---|---|
+| **Hover** | Instantly shows a tooltip with the file content |
+| **Click** | Copies the content to clipboard |
+| **Right-click → Copy Content** | Copies via context menu |
+| **Shell script (`>_`)** | Uses `cat << 'EOF'` instead of `touch` |
 
 <details>
 <summary>Show code</summary>
@@ -1182,6 +1267,10 @@ Add `preview` to show code or text in a tooltip on hover (appears after 600ms):
       note: "types"
     - name: App.vue
       preview: "<template>\n  <div id=\"app\">\n    <router-view />\n  </div>\n</template>"
+    - name: .env
+      preview: "VITE_API_URL=http://localhost:3000\nVITE_APP_TITLE=My App\nVITE_DEBUG=true"
+      note: "Do not commit!"
+    - main.css
 ```
 ````
 
@@ -1200,7 +1289,13 @@ Add `preview` to show code or text in a tooltip on hover (appears after 600ms):
       note: "types"
     - name: App.vue
       preview: "<template>\n  <div id=\"app\">\n    <router-view />\n  </div>\n</template>"
+    - name: .env
+      preview: "VITE_API_URL=http://localhost:3000\nVITE_APP_TITLE=My App\nVITE_DEBUG=true"
+      note: "Do not commit!"
+    - main.css
 ```
+
+> **Tip:** Hover over any file above to see the tooltip. Click to copy its content. Right-click for the "Copy Content" menu item. Files without `preview` (like `main.css`) behave normally. Try the `>_` shell button — files with content use `cat << 'EOF'` instead of `touch`.
 
 ## Context Menu
 

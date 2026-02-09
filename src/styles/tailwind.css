@@ -65,6 +65,13 @@
 .vft-btn-icon {
   @apply vft:shrink-0;
 }
+/* ── Text-only button (download labels) ──────────────────────────── */
+.vft-btn-text {
+  @apply vft:inline-flex vft:items-center vft:justify-center vft:h-6 vft:px-1.5 vft:border-none vft:rounded-sm vft:bg-transparent vft:text-vp-text-3 vft:cursor-pointer vft:transition-colors vft:select-none vft:text-[11px] vft:leading-none;
+  font: inherit;
+  &:hover { @apply vft:bg-vp-bg-soft vft:text-vp-text-1; }
+  &:active { @apply vft:bg-vp-default-soft; }
+}
 
 /* ── Separator ───────────────────────────────────────────────────── */
 .vft-sep {

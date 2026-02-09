@@ -1,20 +1,20 @@
-import { ref, computed, type ComputedRef } from 'vue';
+import { computed, type ComputedRef } from 'vue';
 import YAML from 'yaml';
 import { useClipboard } from './useClipboard';
 import type { TreeNode } from '../utils/types';
 import { treeToText, nodesToExportFormat } from '../utils/tree-helpers';
 
 export function useTreeClipboard(currentTreeData: ComputedRef<TreeNode[]>) {
-  const { copy, copied } = useClipboard({ duration: 1500 });
-  const showDownloadMenu = ref(false);
+  const { copy: copyClip, copied: copyCopied } = useClipboard({ duration: 1500 });
+  const { copy: shellClip, copied: shellCopied } = useClipboard({ duration: 1500 });
 
-  const copyLabel = computed(() => (copied.value ? 'Copied!' : 'Copy'));
+  const copyLabel = computed(() => (copyCopied.value ? 'Copied!' : 'Copy'));
 
   // ─── Copy as ASCII text ─────────────────────────────────────────
 
   function copyAsText() {
     const lines = treeToText(currentTreeData.value, '');
-    copy(lines.join('\n'));
+    copyClip(lines.join('\n'));
   }
 
   // ─── Shell script generation ────────────────────────────────────
@@ -30,6 +30,8 @@ export function useTreeClipboard(currentTreeData: ComputedRef<TreeNode[]>) {
         if (node.isFolder) {
           commands.push(`mkdir -p ${path}`);
           if (node.children) traverse(node.children, path);
+        } else if (node.preview) {
+          commands.push(`cat > ${path} << 'FILEEOF'\n${node.preview}\nFILEEOF`);
         } else {
           commands.push(`touch ${path}`);
         }
@@ -37,13 +39,12 @@ export function useTreeClipboard(currentTreeData: ComputedRef<TreeNode[]>) {
     }
 
     traverse(currentTreeData.value, '');
-    copy(commands.join('\n'));
+    shellClip(commands.join('\n'));
   }
 
   // ─── Download ───────────────────────────────────────────────────
 
   function downloadAs(format: 'txt' | 'yaml' | 'json') {
-    showDownloadMenu.value = false;
     let content: string;
     let mimeType: string;
     let ext: string;
@@ -77,12 +78,16 @@ export function useTreeClipboard(currentTreeData: ComputedRef<TreeNode[]>) {
     URL.revokeObjectURL(url);
   }
 
+  function copyPreview(node: TreeNode) {
+    if (node.preview) copyClip(node.preview);
+  }
+
   return {
     copyLabel,
-    shellCopied: copied,
-    showDownloadMenu,
+    shellCopied,
     copyAsText,
     generateShellScript,
     downloadAs,
+    copyPreview,
   };
 }

@@ -11,6 +11,27 @@ const DEFAULT_EXCLUDES = [
   '.turbo', '.output', 'coverage',
 ];
 
+/** Text-like extensions safe for preview (source code, config, docs). */
+const DEFAULT_PREVIEW_EXTENSIONS = [
+  'ts', 'mts', 'cts', 'tsx', 'js', 'mjs', 'cjs', 'jsx',
+  'vue', 'svelte', 'html', 'htm', 'css', 'scss', 'sass', 'less',
+  'json', 'json5', 'jsonc', 'yaml', 'yml', 'toml', 'xml',
+  'md', 'mdx', 'txt', 'csv', 'tsv',
+  'py', 'rb', 'go', 'rs', 'java', 'kt', 'kts', 'scala',
+  'c', 'cpp', 'cc', 'h', 'hpp', 'cs', 'fs',
+  'sh', 'bash', 'zsh', 'fish', 'bat', 'cmd', 'ps1',
+  'sql', 'graphql', 'gql', 'prisma', 'proto',
+  'php', 'swift', 'dart', 'lua', 'r', 'ex', 'exs', 'el',
+  'ini', 'cfg', 'conf', 'env', 'properties',
+  'dockerfile', 'makefile', 'tf', 'hcl',
+  'gitignore', 'gitattributes', 'editorconfig',
+  'prettierrc', 'eslintrc', 'babelrc',
+  'diff', 'patch', 'log',
+];
+
+/** Default maximum file size for preview (in bytes). */
+const DEFAULT_MAX_PREVIEW_SIZE = 4096; // 4 KB
+
 // ─── Helpers ─────────────────────────────────────────────────────────
 
 function simpleGlobMatch(name: string, pattern: string): boolean {
@@ -21,6 +42,45 @@ function simpleGlobMatch(name: string, pattern: string): boolean {
   return new RegExp(`^${re}$`).test(name);
 }
 
+function getExtLower(name: string): string {
+  // Handle dotfiles like .gitignore → "gitignore"
+  const dot = name.lastIndexOf('.');
+  if (dot <= 0) return name.toLowerCase();
+  return name.slice(dot + 1).toLowerCase();
+}
+
+function isTextExtension(ext: string, allowedExts: string[]): boolean {
+  return allowedExts.includes(ext);
+}
+
+function tryReadPreview(filePath: string, maxSize: number): string | undefined {
+  try {
+    const stat = fs.statSync(filePath);
+    if (stat.size > maxSize || stat.size === 0) return undefined;
+    const content = fs.readFileSync(filePath, 'utf-8');
+    // Ensure content is valid UTF-8 text (no binary junk)
+    if (/[\x00-\x08\x0E-\x1F]/.test(content)) return undefined;
+    return content;
+  } catch {
+    return undefined;
+  }
+}
+
+// ─── Scan options ────────────────────────────────────────────────────
+
+export interface ScanOptions {
+  excludes: string[];
+  includes: string[];
+  /** Read file content into `preview` field */
+  readPreview: boolean;
+  /** Max file size (bytes) to read for preview */
+  maxPreviewSize: number;
+  /** File extensions eligible for preview */
+  previewExtensions: string[];
+  /** How many levels deep folders should be initially open (-1 = all) */
+  openDepth: number;
+}
+
 // ─── Low-level directory scanner ─────────────────────────────────────
 
 /**
@@ -29,8 +89,8 @@ function simpleGlobMatch(name: string, pattern: string): boolean {
 export function scanDirectory(
   dirPath: string,
   maxDepth: number,
-  excludes: string[] = [],
-  includes: string[] = [],
+  opts: ScanOptions,
+  currentDepth: number = 0,
 ): TreeNode[] {
   if (maxDepth <= 0) return [];
 
@@ -50,20 +110,37 @@ export function scanDirectory(
 
   for (const entry of entries) {
     const name = entry.name;
-    if (excludes.some(p => simpleGlobMatch(name, p))) continue;
+    if (opts.excludes.some(p => simpleGlobMatch(name, p))) continue;
 
     if (entry.isDirectory()) {
       const children = scanDirectory(
         nodePath.join(dirPath, name),
         maxDepth - 1,
-        excludes,
-        includes,
+        opts,
+        currentDepth + 1,
       );
-      if (includes.length > 0 && children.length === 0) continue;
-      result.push({ name, isFolder: true, children });
+      if (opts.includes.length > 0 && children.length === 0) continue;
+      const node: TreeNode = { name, isFolder: true, children };
+      // Set open state based on openDepth
+      if (opts.openDepth >= 0) {
+        node.open = currentDepth < opts.openDepth;
+      }
+      result.push(node);
     } else if (entry.isFile()) {
-      if (includes.length > 0 && !includes.some(p => simpleGlobMatch(name, p))) continue;
-      result.push({ name, isFolder: false });
+      if (opts.includes.length > 0 && !opts.includes.some(p => simpleGlobMatch(name, p))) continue;
+      const node: TreeNode = { name, isFolder: false };
+      // Read preview content if enabled
+      if (opts.readPreview) {
+        const ext = getExtLower(name);
+        if (isTextExtension(ext, opts.previewExtensions)) {
+          const preview = tryReadPreview(
+            nodePath.join(dirPath, name),
+            opts.maxPreviewSize,
+          );
+          if (preview) node.preview = preview;
+        }
+      }
+      result.push(node);
     }
   }
 
@@ -79,6 +156,14 @@ export interface FsScanConfig {
   include?: string[];
   showRoot?: boolean;
   name?: string;
+  /** Read file contents into `preview` (default: false) */
+  preview?: boolean;
+  /** Max file size in bytes for preview (default: 4096) */
+  maxPreviewSize?: number;
+  /** File extensions to read for preview (default: common text extensions) */
+  previewExtensions?: string[];
+  /** Max folder depth to auto-open (-1 = all, 0 = all closed) */
+  openDepth?: number;
 }
 
 /**
@@ -94,6 +179,15 @@ export function processFsScan(config: FsScanConfig, rootPath: string): TreeNode[
   const excludes = [...DEFAULT_EXCLUDES, ...userExcludes];
   const showRoot = config.showRoot !== false;
   const rootName = typeof config.name === 'string' ? config.name : undefined;
+
+  const readPreview = config.preview === true;
+  const maxPreviewSize = typeof config.maxPreviewSize === 'number' && config.maxPreviewSize > 0
+    ? config.maxPreviewSize
+    : DEFAULT_MAX_PREVIEW_SIZE;
+  const previewExtensions = Array.isArray(config.previewExtensions)
+    ? config.previewExtensions.map(String)
+    : DEFAULT_PREVIEW_EXTENSIONS;
+  const openDepth = typeof config.openDepth === 'number' ? config.openDepth : -1;
 
   const absolutePath = nodePath.isAbsolute(fromPath)
     ? fromPath
@@ -114,12 +208,25 @@ export function processFsScan(config: FsScanConfig, rootPath: string): TreeNode[
     throw new Error(`Not a directory: ${fromPath}`);
   }
 
-  const children = scanDirectory(absolutePath, depth, excludes, userIncludes);
+  const scanOpts: ScanOptions = {
+    excludes,
+    includes: userIncludes,
+    readPreview,
+    maxPreviewSize,
+    previewExtensions,
+    openDepth,
+  };
+
+  const children = scanDirectory(absolutePath, depth, scanOpts);
 
   let tree: TreeNode[];
   if (showRoot) {
     const dirName = rootName || nodePath.basename(absolutePath);
-    tree = [{ name: dirName, isFolder: true, children }];
+    const rootNode: TreeNode = { name: dirName, isFolder: true, children };
+    if (openDepth >= 0) {
+      rootNode.open = true; // root always open
+    }
+    tree = [rootNode];
   } else {
     tree = children;
   }

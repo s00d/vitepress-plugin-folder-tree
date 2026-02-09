@@ -158,6 +158,30 @@ exclude:
 ```
 ````
 
+With file content preview (hover to see, click to copy):
+
+````yaml
+```tree
+from: ./src
+preview: true
+maxPreviewSize: 4096
+openDepth: 2
+```
+````
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `from` | `string` | — | Directory path to scan |
+| `depth` | `number` | `10` | Max directory nesting depth |
+| `preview` | `boolean` | `false` | Read file contents into tooltip |
+| `maxPreviewSize` | `number` | `4096` | Max file size (bytes) for preview |
+| `previewExtensions` | `string[]` | common text exts | Which file extensions to read |
+| `openDepth` | `number` | `-1` (all) | Folder auto-open depth (`0` = all closed) |
+| `exclude` | `string[]` | built-in list | Glob patterns to exclude |
+| `include` | `string[]` | `[]` (all) | Glob patterns to include |
+| `showRoot` | `boolean` | `true` | Wrap in root folder node |
+| `name` | `string` | dir name | Custom root folder name |
+
 ---
 
 ## Node Fields

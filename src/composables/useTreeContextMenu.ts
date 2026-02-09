@@ -9,6 +9,7 @@ export function useTreeContextMenu() {
     y: 0,
     path: '',
     name: '',
+    preview: '',
   });
 
   const { copy } = useClipboard();
@@ -25,10 +26,11 @@ export function useTreeContextMenu() {
     ctxMenu.y = e.clientY;
     ctxMenu.path = path;
     ctxMenu.name = node.name;
+    ctxMenu.preview = node.preview || '';
   }
 
-  function copyCtx(type: 'name' | 'path') {
-    const text = type === 'name' ? ctxMenu.name : ctxMenu.path;
+  function copyCtx(type: 'name' | 'path' | 'content') {
+    const text = type === 'name' ? ctxMenu.name : type === 'path' ? ctxMenu.path : ctxMenu.preview;
     copy(text);
     closeCtx();
   }
