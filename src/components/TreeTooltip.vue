@@ -3,7 +3,8 @@
     :visible="tooltip.visible"
     :x="tooltip.x"
     :y="tooltip.y"
-    :offset-y="10"
+    :offset-x="15"
+    :offset-y="15"
   >
     <div class="vft-tooltip">
       <pre class="vft-tooltip-pre">{{ tooltip.text }}</pre>

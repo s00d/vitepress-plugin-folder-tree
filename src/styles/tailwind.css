@@ -260,7 +260,7 @@
 
 /* ── Context menu panel ──────────────────────────────────────────── */
 .vft-ctx-panel {
-  @apply vft:z-[100] vft:min-w-40 vft:bg-vp-bg vft:border vft:border-vp-divider vft:rounded-lg vft:shadow-lg vft:p-1 vft:text-[13px] vft:backdrop-blur-xl;
+  @apply vft:min-w-40 vft:bg-vp-bg vft:border vft:border-vp-divider vft:rounded-lg vft:shadow-lg vft:p-1 vft:text-[13px] vft:backdrop-blur-xl;
 }
 .vft-ctx-item {
   @apply vft:px-2.5 vft:py-1.5 vft:rounded vft:cursor-default vft:text-vp-text-1 vft:transition-colors;
@@ -269,7 +269,7 @@
 
 /* ── Dropdown panel ──────────────────────────────────────────────── */
 .vft-dropdown-panel {
-  @apply vft:z-50 vft:bg-vp-bg vft:border vft:border-vp-divider vft:rounded-lg vft:shadow-lg vft:p-1 vft:min-w-[100px];
+  @apply vft:bg-vp-bg vft:border vft:border-vp-divider vft:rounded-lg vft:shadow-lg vft:p-1 vft:min-w-[100px];
 }
 .vft-dropdown-item {
   @apply vft:block vft:w-full vft:py-[5px] vft:px-2.5 vft:border-none vft:rounded vft:bg-transparent vft:text-left vft:text-xs vft:font-[inherit] vft:cursor-pointer vft:text-vp-text-1 vft:leading-normal;
@@ -278,7 +278,7 @@
 
 /* ── Tooltip ─────────────────────────────────────────────────────── */
 .vft-tooltip {
-  @apply vft:z-[101] vft:bg-[#202020] vft:text-[#e8e8e8] vft:border vft:border-[#333] vft:px-3 vft:py-2 vft:rounded-md vft:text-xs vft:leading-relaxed vft:max-w-[360px] vft:whitespace-pre vft:pointer-events-none vft:shadow-lg;
+  @apply vft:bg-[#202020] vft:text-[#e8e8e8] vft:border vft:border-[#333] vft:px-3 vft:py-2 vft:rounded-md vft:text-xs vft:leading-relaxed vft:max-w-[360px] vft:whitespace-pre vft:shadow-lg;
   font-family: var(--font-family-vp-mono);
 }
 .vft-tooltip-pre {
