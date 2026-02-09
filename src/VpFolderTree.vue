@@ -206,14 +206,15 @@ function onResize() {
 }
 
 // ─── Event listeners (auto-cleanup on unmount) ───────────────────────
-useEventListener(window, 'hashchange', handleHashChange);
-useEventListener(window, 'resize', onResize);
-useEventListener(window, 'scroll', onResize, { capture: true });
+const _win = typeof window !== 'undefined' ? window : null;
+useEventListener(_win, 'hashchange', handleHashChange);
+useEventListener(_win, 'resize', onResize);
+useEventListener(_win, 'scroll', onResize, { capture: true });
 
 // ─── Lifecycle ───────────────────────────────────────────────────────
 onMounted(() => {
   initExpand();
-  if (window.location.hash) handleHashChange();
+  if (typeof window !== 'undefined' && window.location.hash) handleHashChange();
 });
 
 onUnmounted(() => {

@@ -26,6 +26,7 @@ export function useTreeDeepLink(
   }
 
   function handleHashChange() {
+    if (typeof window === 'undefined') return;
     const raw = window.location.hash.slice(1);
     if (!raw) return;
     const hash = decodeURIComponent(raw);
